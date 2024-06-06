@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h> // fill later
+#include <unistd.h> 
 #include <string.h>
-#include<sys/wait.h> // To enable using the wait() system call.
+#include<sys/wait.h>
 #include <sys/types.h>
 
 #define MAX 100
@@ -10,7 +10,7 @@
 int main (int argc, char* argv[]) {
 
     char user_input[MAX];
-    char *path = getenv("PATH"); // To get back the enviorment path.
+    char *path = getenv("PATH"); // enviorment path
     char *token_path = NULL;
     char *token_user_input = NULL;
     char *user_input_tokenized_arr[MAX];
@@ -27,21 +27,16 @@ int main (int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
         else if (pid == 0) {
-            // Prompt
             printf("✌ ");
 
-            // On success, the function returns the same str parameter.
-            // If the End-of-File is encountered and no characters have been read, 
-            // the contents of str remain unchanged and a null pointer is returned.
             if (fgets(user_input, MAX, stdin) != NULL) {
                 user_input_length = strlen(user_input);
                 user_input[user_input_length - 1] = '\0';
                 if (strcmp(user_input, "Leave") == 0) {
-                    exit(7); // stat = 2 * 256 = 512
+                    exit(7);
                 }
                 else {
-                    // Tokenize user's input and copy every token to user_input_tokenized_arr.
-                    // Add "NULL" to the last element. (Execv requires this)
+                    // Add "NULL" to the last element. (Execv)
                     token_user_input = strtok(user_input, " \t");
                     while (token_user_input != NULL) {
                         user_input_tokenized_arr[i++] = token_user_input;
@@ -59,7 +54,7 @@ int main (int argc, char* argv[]) {
                     }
 
                     printf("ERROR: Command Not Found.\n");
-                    exit(5); // stat != 0, 5 * 256 = 1280
+                    exit(5);
                 }
             }
        
